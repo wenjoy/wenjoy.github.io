@@ -3,15 +3,17 @@
 exports[`Card should display emoji rightly 1`] = `
 <div>
   <div
-    class="card"
-  />
+    class="container small"
+  >
+    ☕
+  </div>
 </div>
 `;
 
 exports[`Card should display number rightly 1`] = `
 <div>
   <div
-    class="card"
+    class="container small"
   >
     5
   </div>
@@ -21,7 +23,7 @@ exports[`Card should display number rightly 1`] = `
 exports[`Card should display string rightly 1`] = `
 <div>
   <div
-    class="card"
+    class="container small"
   >
     ?
   </div>
@@ -31,7 +33,7 @@ exports[`Card should display string rightly 1`] = `
 exports[`Card should render the card 1`] = `
 <div>
   <div
-    class="card"
+    class="container small"
   >
     0
   </div>
