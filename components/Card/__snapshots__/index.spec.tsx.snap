@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card should display emoji rightly 1`] = `
+<div>
+  <div
+    class="card"
+  />
+</div>
+`;
+
+exports[`Card should display number rightly 1`] = `
+<div>
+  <div
+    class="card"
+  >
+    5
+  </div>
+</div>
+`;
+
+exports[`Card should display string rightly 1`] = `
+<div>
+  <div
+    class="card"
+  >
+    ?
+  </div>
+</div>
+`;
+
+exports[`Card should render the card 1`] = `
+<div>
+  <div
+    class="card"
+  >
+    0
+  </div>
+</div>
+`;
