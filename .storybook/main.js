@@ -14,7 +14,19 @@ module.exports = {
     "builder": "@storybook/builder-webpack5"
   },
   // fix makeSerializable.js error
-  "typescript":{
-      "reactDocgen": false
+  "typescript": {
+    "reactDocgen": false
+  },
+  "webpackFinal": async (config, { configType }) => {
+    const rule = config.module.rules.find(rule => rule.test.exec('.css'));
+    const options = rule.use[1].options
+    console.log('options: ', options);
+    rule.use[1].options = {
+      ...options,
+      modules: {
+        exportLocalsConvention: "camelCase",
+      }
+    }
+    return config;
   }
 }
