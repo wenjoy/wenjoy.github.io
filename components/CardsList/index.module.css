@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  justify-content: start;
+  padding: 5px;
+  margin: 0;
+}
+
+.item-wrapper {
+  margin: 0 15px 15px 0;
+}

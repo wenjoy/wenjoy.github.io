@@ -1,6 +1,6 @@
 import styles from './index.module.css'
 
-type Point = number | string
+export type Point = number | string
 interface ICardProps {
     point?: Point
     size?: 'small' | 'large'

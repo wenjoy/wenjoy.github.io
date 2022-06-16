@@ -1,13 +1,12 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Card from '.'
-
+import Card, {Point} from '.'
 export default {
   title: 'Example/Card',
   component: Card,
 } as ComponentMeta<typeof Card>;
 
 
-const clickHandler = (point) => {
+const clickHandler = (point: Point) => {
   alert('you clicked ' + point)
 }
 
