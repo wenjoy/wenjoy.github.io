@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List should renders List correctly 1`] = `
+<div>
+  <div>
+    <div>
+      test one
+    </div>
+  </div>
+</div>
+`;
+
+exports[`List should renders empty result 1`] = `
+<div>
+  <div
+    data-testid="no-result"
+  >
+    Nothing can be displayed
+  </div>
+</div>
+`;
