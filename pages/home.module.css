@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  height: 100vh;
+  padding: 1rem;
+  background: #fffcf7;
+}
+
+.center {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  padding: 5px 10px;
+  margin-bottom: 15px;
+  flex: 3;
+  box-shadow: 2px 2px 2px lightgray;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
+.footer {
+  flex: 1;
+  box-shadow: 2px 2px 2px lightgray;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.aside {
+  flex: 1;
+  padding: 0 2rem;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}

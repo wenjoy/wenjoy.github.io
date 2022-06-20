@@ -8,8 +8,7 @@ const nextConfig = {
 			.find(({oneOf}) => !!oneOf).oneOf
 			.filter(({use}) => JSON.stringify(use)?.includes('css-loader'))
 			.reduce((acc, {use}) => acc.concat(use), [])
-			.forEach(({options}) => {
-        console.log('options: ', options);
+      .forEach(({ options }) => {
 				if (options.modules) {
 					options.modules.exportLocalsConvention = 'camelCase';
 				}
