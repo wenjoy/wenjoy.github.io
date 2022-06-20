@@ -1,7 +1,7 @@
 import Card from '../Card'
 import styles from './index.module.css'
 
-interface Card {
+export interface Card {
   id: string
   point: string
 }
