@@ -20,4 +20,19 @@ describe('List', () => {
     expect(result).toBeInTheDocument()
     expect(container).toMatchSnapshot()
   })
+
+  it('should renders List with customized item correctly', () => {
+    const data: any[] = [{ name: 'test one' }]
+    const ListItem = ({ name }: any) => <span>{name}</span>
+    const { container } = render(<List data={data}>
+      {(item) => <ListItem name={item.name} />}
+    </List>)
+
+    const result = screen.getByText('test one')
+    expect(result).toBeVisible()
+    expect(result).toContainHTML('span')
+
+    expect(container).toMatchSnapshot()
+  })
+
 })
