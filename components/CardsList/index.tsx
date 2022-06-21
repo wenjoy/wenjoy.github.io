@@ -1,20 +1,17 @@
-import Card from '../Card'
+import Card, { ICardProps } from '../Card'
 import styles from './index.module.css'
 
-export interface Card {
-  id: string
-  point: string
-}
-
 interface CardsListProps {
-  items: Card[]
+  children?: (item: ICardProps) => JSX.Element
+  items: ICardProps[]
 }
 
-export default function CardsList({ items }: CardsListProps) {
+export default function CardsList({ items, children }: CardsListProps) {
+  const ItemComp = children || ((item: ICardProps) => <Card {...item} />);
   return (
     <div className={styles.container}>
       {items.map((item) => <div className={styles.itemWrapper} key={item.id}>
-        <Card {...item} />
+        <ItemComp {...item} />
       </div>)}
       </div>
   )

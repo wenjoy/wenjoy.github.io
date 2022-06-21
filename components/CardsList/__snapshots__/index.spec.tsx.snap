@@ -19,7 +19,15 @@ exports[`CardsList should render the cards list properly 1`] = `
       <div
         class="container small"
       >
-        5
+        <div
+          class="card frontface"
+        >
+           
+          5
+        </div>
+        <div
+          class="owner"
+        />
       </div>
     </div>
   </div>

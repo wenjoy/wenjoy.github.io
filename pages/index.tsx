@@ -2,16 +2,24 @@ import type { NextPage } from 'next'
 import styles from './home.module.css'
 import { User, Role, Status } from '../components/user';
 import { List } from '../components/list';
-import CardsList, { Card } from '../components/CardsList';
+import Card, {ICardProps} from '../components/Card';
+import CardsList from '../components/CardsList';
 
 const Home: NextPage = () => {
-  const data = [
+  const users = [
     { id: 1, name: 'David', role: Role.Moderator, status: Status.Voted },
     { id: 2, name: 'Tom', role: Role.Player, status: Status.Pending },
     { id: 3, name: 'Volta', role: Role.Player, status: Status.Pending }
   ]
 
-  const cards: Card[] = [
+  const cardsOnDesk = [
+    { id: '1', owner: 'David long long' },
+    { id: '2', owner: 'Tom' },
+    { id: '3', owner: 'Green' },
+    { id: '4', owner: 'Lim' },
+  ]
+
+  const cards: ICardProps[] = [
     { id: '1', point: '0' },
     { id: '2', point: '0.5' },
     { id: '3', point: '1' },
@@ -31,14 +39,16 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <section className={styles.center}>
         <div className={styles.content}>
-          content
+          <CardsList items={cardsOnDesk}>
+            {(item) => <Card isBack={true} size="large" {...item} />}
+          </CardsList>
         </div>
         <div className={styles.footer}>
           <CardsList items={cards} />
         </div>
       </section>
       <section className={styles.aside}>
-        <List data={data}>
+        <List data={users}>
           { /*can I just User here?*/}
           {(item) => <User {...item} />}
         </List>
