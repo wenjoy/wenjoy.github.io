@@ -1,0 +1,61 @@
+.container {
+  background: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel {
+  width: 300px;
+  height: 330px;
+  padding: 25px 10px;
+  background: whitesmoke;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.item {
+  margin-bottom: 20px;
+}
+
+.input {
+  display: inline-block;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  display: block;
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+}
+
+.button:hover {
+  box-shadow: 0 0 2px gray;
+}
+
+.fieldset {
+  border: 2px dashed lightgray;
+}
+
+.hint {
+  margin-top: 10px;
+  color: #f7a072;
+}

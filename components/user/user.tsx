@@ -13,9 +13,9 @@ export enum Status {
 }
 
 export enum Role {
-  Moderator = 'moderator',
-  Observer = 'observer',
   Player = 'player',
+  Observer = 'observer',
+  Moderator = 'moderator',
 }
 
 const statusIndicatorDict = {

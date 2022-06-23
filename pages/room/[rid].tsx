@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import styles from './home.module.css'
-import { User, Role, Status } from '../components/user';
-import { List } from '../components/list';
-import Card, { ICardProps } from '../components/Card';
-import CardsList from '../components/CardsList';
+import { User, Role, Status } from '../../components/user';
+import { List } from '../../components/list';
+import Card, { ICardProps } from '../../components/Card';
+import CardsList from '../../components/CardsList';
 import { useEffect, useRef } from 'react';
 import { uuid } from 'uuidv4';
 

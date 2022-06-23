@@ -16,6 +16,11 @@ const nextConfig = {
 
 		return config;
 	},
+  async redirects() {
+    return [
+      {source: '/', destination:'/antechamber', permanent: true}
+    ]
+  }
 }
 
 module.exports = nextConfig
