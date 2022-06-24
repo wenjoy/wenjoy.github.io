@@ -1,46 +1,33 @@
 import type { NextPage } from 'next'
-import styles from './home.module.css'
+import styles from './room.module.css'
 import { User, Role, Status } from '../../components/user';
 import { List } from '../../components/list';
 import Card, { ICardProps } from '../../components/Card';
 import CardsList from '../../components/CardsList';
 import { useEffect, useRef } from 'react';
-import { uuid } from 'uuidv4';
+import { getSocket } from '../../socket';
+import { getStore } from '../../store';
+import { useRouter } from 'next/router';
 
-const Home: NextPage = () => {
-  const idRef = useRef<string>();
-  
+const Room: NextPage = () => {
+  const router = useRouter()
   useEffect(() => {
-    if(idRef.current) {
-      return
-    }
+    const joinRoom = async () => {
+      const ws = await getSocket()
+      const accessInfo = getStore('accessInfo')
 
-    const id = idRef.current = uuid();
-    let ws: WebSocket
-    console.log('once',id);
+      if(!accessInfo) {
+        router.push('/antechamber')
+        return
+      }
+
+      ws.send({
+        type: 'join',
+        data: JSON.parse(accessInfo)
+      })
+    } 
     
-    fetch('/api/socket').then(() => {
-      // ws = new WebSocket('ws://localhost:3000/api/socket');
-      ws = new WebSocket('ws://localhost:8888');
-      ws.onopen = function (event) {
-        console.log('connected');
-        ws.send(`join:${id}`)
-      }
-
-      ws.onmessage = function (event) {
-        console.log('message is: ', event.data);
-      }
-
-      ws.onclose = function (event) {
-        console.log('connection closed', event);
-      }
-    })
-
-    return () => {
-      //react strict mode dilemma, async problem
-      ws?.send(`leave: ${id}`)
-      ws?.close()
-    }
+    joinRoom();
   }, [])
 
   const users = [
@@ -95,4 +82,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Room

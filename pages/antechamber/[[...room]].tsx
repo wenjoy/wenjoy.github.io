@@ -13,7 +13,7 @@ export default function () {
   const [room, setRoom] = useState('')
   const [role, setRole] = useState(roles[0])
   const [hint, setHint] = useState('')
-  const accessInfo = JSON.parse(getStore('accessInfo') ?? null)
+  let accessInfo = JSON.parse(getStore('accessInfo') ?? null)
 
   if (accessInfo) {
     router.push(`/room/${accessInfo.room}`)
@@ -38,7 +38,16 @@ export default function () {
     }
 
 
+    accessInfo = {
+      ...accessInfo,
+      username: username,
+      room: room,
+      role: role
+    }
+
     const dataStr = JSON.stringify(accessInfo)
+    console.log(dataStr);
+
     setStore('accessInfo', dataStr)
 
     router.push(`/room/${room}`)
@@ -49,7 +58,7 @@ export default function () {
     setUsername(e.target.value)
   }
 
-  const updateRoom= (e: React.ChangeEvent<HTMLInputElement>) => {
+  const updateRoom = (e: React.ChangeEvent<HTMLInputElement>) => {
     setHint('')
     setRoom(e.target.value)
   }
@@ -75,7 +84,7 @@ export default function () {
           <fieldset className={styles.fieldset}>
             <legend>Specify your role</legend>
             {
-              roles.map((item) => <>
+              roles.map((item, ind) => <>
                 <input defaultChecked={item === role} type="radio" id={item} name={item.toLowerCase()} onChange={updateRole} />
                 <label htmlFor={item}>{item}</label><br />
               </>)
