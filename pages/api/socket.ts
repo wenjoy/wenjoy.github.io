@@ -2,6 +2,24 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { WebSocketServer } from 'ws';
 import { parse } from 'url';
 
+type Dict = Record<string, any[]>
+
+function setData(dict: Dict, key: string, value: any) {
+  if (dict[key]) {
+    dict[key].push(value)
+  } else {
+    dict[key] = [value]
+  }
+}
+
+function broadcast(chanel: any[], msg: any) {
+  chanel.forEach(function each(client: any) {
+    if (client.readyState === client.OPEN) {
+      client.send(JSON.stringify(msg));
+    }
+  });
+}
+
 export default function socket(req: NextApiRequest, res: NextApiResponse) {
   const { pathname } = parse(req.url as string);
 
@@ -19,8 +37,9 @@ export default function socket(req: NextApiRequest, res: NextApiResponse) {
     // @ts-ignore
     req.socket.server.wss = wss
 
-    const users: string[] = []
-    const clients: Record<string, any> = {}
+    const users: Dict = {}
+    const actions: Dict = {}
+    const clients: Dict = {}
 
     wss.on('connection', function connection(ws: any) {
       ws.on('message', function message(raw: string) {
@@ -31,23 +50,25 @@ export default function socket(req: NextApiRequest, res: NextApiResponse) {
 
         if (type === 'join') {
           const { room } = data
-          users.push(data);
 
-          if (clients[room]) {
-            clients[room].push(ws)
-          } else {
-            clients[room] = [ws]
-          }
+          setData(users, room, data)
+          setData(clients, room, ws)
 
-          clients[room].forEach(function each(client: any) {
-            if (client.readyState === ws.OPEN) {
-              client.send(JSON.stringify({ type: 'users', data: users.filter((item: any) => item.room === room) }));
-            }
-          });
+          broadcast(clients[room], { type: 'users', data: users[room] })
+        }
+
+        if (type === 'act') {
+          const { room, name } = data
+          setData(actions, room, data)
+
+          const target = users[room].find((item) => item.name === name)
+          target.status = 1
+          broadcast(clients[room], { type: 'users', data: users[room] })
+          broadcast(clients[room], { type: 'cards', data: actions[room]})
         }
       });
 
-      ws.send(JSON.stringify({type: 'system', data: 'connected'}));
+      ws.send(JSON.stringify({ type: 'system', data: 'connected' }));
     });
   } else {
     console.log('already running');

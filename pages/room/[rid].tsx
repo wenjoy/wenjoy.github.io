@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import styles from './room.module.css'
-import { User, Role, Status, Props } from '../../components/user';
+import { User, Props } from '../../components/user';
 import { List } from '../../components/list';
-import Card, { ICardProps } from '../../components/Card';
+import Card, { ICardProps, Point } from '../../components/Card';
 import CardsList from '../../components/CardsList';
 import { useEffect, useRef, useState } from 'react';
 import { getSocket } from '../../socket';
@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 const Room: NextPage = () => {
   const router = useRouter()
   const [users, setUsers] = useState<Props[]>([])
+  const [cards, setCards] = useState<ICardProps[]>([])
 
   useEffect(() => {
     const joinRoom = async () => {
@@ -32,8 +33,13 @@ const Room: NextPage = () => {
         console.log('event', event);
         
         const {type, data} = JSON.parse(event.data)
+
         if(type === 'users') {
           setUsers(data)
+        }
+
+        if(type === 'cards') {
+          setCards(data)
         }
       })
     } 
@@ -41,14 +47,26 @@ const Room: NextPage = () => {
     joinRoom();
   }, [])
 
-  const cardsOnDesk = [
-    { id: '1', owner: 'David long long' },
-    { id: '2', owner: 'Tom' },
-    { id: '3', owner: 'Green' },
-    { id: '4', owner: 'Lim' },
-  ]
+  const act = async (point: Point) => {
+    const ws = await getSocket()
+    const accessInfo = JSON.parse(getStore('accessInfo'))
 
-  const cards: ICardProps[] = [
+      if(!accessInfo) {
+        router.push('/antechamber')
+        return
+      }
+
+
+    ws.send({
+      type: 'act',
+      data: {
+        point,
+        ...accessInfo
+      }
+    })
+  }
+
+  const deck: ICardProps[] = [
     { id: '1', point: '0' },
     { id: '2', point: '0.5' },
     { id: '3', point: '1' },
@@ -68,12 +86,14 @@ const Room: NextPage = () => {
     <div className={styles.container}>
       <section className={styles.center}>
         <div className={styles.content}>
-          <CardsList items={cardsOnDesk}>
+          <CardsList items={cards}>
             {(item) => <Card isBack={true} size="large" {...item} />}
           </CardsList>
         </div>
         <div className={styles.footer}>
-          <CardsList items={cards} />
+          <CardsList items={deck}>
+            {(item) => <Card clickHandler={act} {...item} />}
+          </CardsList>
         </div>
       </section>
       <section className={styles.aside}>
