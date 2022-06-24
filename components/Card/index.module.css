@@ -5,7 +5,7 @@
 .frontface {
   background: #e4f0d0;
   user-select: none;
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🧐</text></svg>") 16 0, auto;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>✋</text></svg>") 16 0, auto;
 }
 
 .frontface:hover {
@@ -20,7 +20,7 @@ background-image: repeating-linear-gradient(45deg, transparent, transparent 15px
 
 .card {
   min-width: 100%;
-  min-height: 70%;
+  min-height: 80%;
   border: 1px solid lightgray;
   border-radius: 3px;
   padding: 5px;
@@ -30,7 +30,7 @@ background-image: repeating-linear-gradient(45deg, transparent, transparent 15px
 
 .owner {
   min-width: 100%;
-  min-height: 30%;
+  min-height: 20%;
   font-size: 16px;
   white-space: nowrap;
   overflow: hidden;

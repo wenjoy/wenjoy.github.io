@@ -39,7 +39,7 @@ const Room: NextPage = () => {
         }
 
         if(type === 'cards') {
-          setCards(data)
+          setCards(data.map((item: any) => ({...item, owner: item.name})))
         }
       })
     } 
@@ -86,7 +86,7 @@ const Room: NextPage = () => {
     <div className={styles.container}>
       <section className={styles.center}>
         <div className={styles.content}>
-          <CardsList items={cards}>
+          <CardsList items={cards} autoWrap={true}>
             {(item) => <Card isBack={true} size="large" {...item} />}
           </CardsList>
         </div>
