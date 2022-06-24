@@ -40,7 +40,7 @@ export default function () {
 
     accessInfo = {
       ...accessInfo,
-      username: username,
+      name: username,
       room: room,
       role: role
     }

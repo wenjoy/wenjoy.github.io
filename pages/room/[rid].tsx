@@ -1,16 +1,18 @@
 import type { NextPage } from 'next'
 import styles from './room.module.css'
-import { User, Role, Status } from '../../components/user';
+import { User, Role, Status, Props } from '../../components/user';
 import { List } from '../../components/list';
 import Card, { ICardProps } from '../../components/Card';
 import CardsList from '../../components/CardsList';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getSocket } from '../../socket';
 import { getStore } from '../../store';
 import { useRouter } from 'next/router';
 
 const Room: NextPage = () => {
   const router = useRouter()
+  const [users, setUsers] = useState<Props[]>([])
+
   useEffect(() => {
     const joinRoom = async () => {
       const ws = await getSocket()
@@ -25,16 +27,19 @@ const Room: NextPage = () => {
         type: 'join',
         data: JSON.parse(accessInfo)
       })
+
+      ws.listen('message', event => {
+        console.log('event', event);
+        
+        const {type, data} = JSON.parse(event.data)
+        if(type === 'users') {
+          setUsers(data)
+        }
+      })
     } 
     
     joinRoom();
   }, [])
-
-  const users = [
-    { id: 1, name: 'David', role: Role.Moderator, status: Status.Voted },
-    { id: 2, name: 'Tom', role: Role.Player, status: Status.Pending },
-    { id: 3, name: 'Volta', role: Role.Player, status: Status.Pending }
-  ]
 
   const cardsOnDesk = [
     { id: '1', owner: 'David long long' },

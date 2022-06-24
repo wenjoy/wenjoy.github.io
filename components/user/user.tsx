@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './user.module.css';
 
-interface Props {
+export interface Props {
   name: string;
   status: Status;
   role: Role;

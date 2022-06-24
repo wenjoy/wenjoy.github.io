@@ -21,16 +21,18 @@ export default function socket(req: NextApiRequest, res: NextApiResponse) {
 
     const users: string[] = []
     wss.on('connection', function connection(ws: any) {
-      ws.on('message', function message(data: any) {
-        console.log('received: %s', typeof data, data);
-        const [type, content] = String(data).split(':');
+      ws.on('message', function message(raw: string) {
+        console.log('received: ', typeof raw, raw);
+        const {type, data} = JSON.parse(raw);
+
+        data.status = 0
 
         if(type === 'join') {
-          users.push(content);
+          users.push(data);
 
           wss.clients.forEach(function each(client: any) {
             if (client.readyState === ws.OPEN) {
-              client.send(JSON.stringify(users));
+              client.send(JSON.stringify({type: 'users', data: users}));
             }
           });
         }
