@@ -20,25 +20,34 @@ export default function socket(req: NextApiRequest, res: NextApiResponse) {
     req.socket.server.wss = wss
 
     const users: string[] = []
+    const clients: Record<string, any> = {}
+
     wss.on('connection', function connection(ws: any) {
       ws.on('message', function message(raw: string) {
         console.log('received: ', typeof raw, raw);
-        const {type, data} = JSON.parse(raw);
+        const { type, data } = JSON.parse(raw);
 
         data.status = 0
 
-        if(type === 'join') {
+        if (type === 'join') {
+          const { room } = data
           users.push(data);
 
-          wss.clients.forEach(function each(client: any) {
+          if (clients[room]) {
+            clients[room].push(ws)
+          } else {
+            clients[room] = [ws]
+          }
+
+          clients[room].forEach(function each(client: any) {
             if (client.readyState === ws.OPEN) {
-              client.send(JSON.stringify({type: 'users', data: users}));
+              client.send(JSON.stringify({ type: 'users', data: users.filter((item: any) => item.room === room) }));
             }
           });
         }
       });
 
-      ws.send('connected');
+      ws.send(JSON.stringify({type: 'system', data: 'connected'}));
     });
   } else {
     console.log('already running');
