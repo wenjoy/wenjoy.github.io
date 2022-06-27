@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { WebSocketServer } from 'ws';
 import { parse } from 'url';
+import { Status } from '../../components/user';
 
 type Dict = Record<string, any[]>
 
@@ -63,7 +64,7 @@ export default function socket(req: NextApiRequest, res: NextApiResponse) {
         if (type === 'join') {
           const { room, ...userData} = data
 
-          setData(users, room, {...userData, status: 0})
+          setData(users, room, {...userData, status: Status.Pending})
           setData(clients, room, {
             id: userData.id,
             send: (...args:any[]) => {ws.send(...args)},
@@ -80,7 +81,7 @@ export default function socket(req: NextApiRequest, res: NextApiResponse) {
           setData(actions, room, data, true)
 
           const target = users[room].find((item) => item.id === id)
-          target.status = 1
+          target.status = Status.Voted
           broadcast(clients[room], { type: 'users', data: users[room] })
           broadcast(clients[room], { type: 'cards', data: actions[room]})
         }
