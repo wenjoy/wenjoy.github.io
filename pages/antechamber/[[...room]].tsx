@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './index.module.css'
 import cls from 'classnames'
 import { Role } from '../../components/user'
 import { getStore, setStore } from '../../store'
+import { uuid } from 'uuidv4'
 
 export default function () {
   const router = useRouter()
@@ -13,11 +14,16 @@ export default function () {
   const [room, setRoom] = useState('')
   const [role, setRole] = useState(roles[0])
   const [hint, setHint] = useState('')
-  let accessInfo = JSON.parse(getStore('accessInfo') ?? null)
 
-  if (accessInfo) {
-    router.push(`/room/${accessInfo.room}`)
-  }
+  let accessInfo: any
+
+  useEffect(() => {
+    accessInfo = JSON.parse(getStore('accessInfo') ?? null)
+
+    if (accessInfo) {
+      router.push(`/room/${accessInfo.room}`)
+    }
+  })
 
   const access = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -40,13 +46,13 @@ export default function () {
 
     accessInfo = {
       ...accessInfo,
+      id: uuid(),
       name: username,
       room: room,
       role: role
     }
 
     const dataStr = JSON.stringify(accessInfo)
-    console.log(dataStr);
 
     setStore('accessInfo', dataStr)
 

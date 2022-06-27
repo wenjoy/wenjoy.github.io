@@ -10,12 +10,14 @@ import { getStore } from '../../store';
 import { useRouter } from 'next/router';
 
 const Room: NextPage = () => {
+  const hasBeenCalled = useRef(false)
   const router = useRouter()
   const [users, setUsers] = useState<Props[]>([])
   const [cards, setCards] = useState<ICardProps[]>([])
 
   useEffect(() => {
     const joinRoom = async () => {
+      hasBeenCalled.current = true
       const ws = await getSocket()
       const accessInfo = getStore('accessInfo')
 
@@ -44,6 +46,10 @@ const Room: NextPage = () => {
       })
     } 
     
+    if(hasBeenCalled.current) {
+      return
+    }
+
     joinRoom();
   }, [])
 
