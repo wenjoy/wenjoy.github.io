@@ -8,11 +8,7 @@ interface CardsListProps {
   autoWrap?: boolean
 }
 
-export const CardsList: React.FC<CardsListProps> = ({
-  items,
-  children,
-  autoWrap,
-}) => {
+export const CardsList = ({ items, children, autoWrap }: CardsListProps) => {
   const ItemComp = children || ((item: Card) => <Card {...item} />)
   return (
     <div className={cls(styles.container, autoWrap && styles.wrap)}>

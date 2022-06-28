@@ -15,13 +15,13 @@ export interface CardProps {
   clickHandler?: (p: Point) => void
 }
 
-export const Card: React.FC<CardProps> = ({
+export const Card = ({
   point = 0,
   size = 'small',
   isBack,
   owner,
   clickHandler = () => {},
-}) => {
+}: CardProps) => {
   return (
     <div
       className={[styles.container, styles[size]].join(' ')}
