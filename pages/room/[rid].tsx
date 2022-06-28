@@ -1,19 +1,19 @@
 import type { NextPage } from 'next'
 import styles from './room.module.css'
-import { User, Props } from '../../components/user';
-import { List } from '../../components/list';
-import Card, { ICardProps, Point } from '../../components/Card';
-import CardsList from '../../components/CardsList';
-import { useEffect, useRef, useState } from 'react';
-import { getSocket } from '../../socket';
-import { getStore } from '../../store';
-import { useRouter } from 'next/router';
+import { User, Props } from '../../components/user'
+import { List } from '../../components/list'
+import { Card, Point } from '../../components/card/card'
+import { CardsList } from '../../components/cards-list/cards-list'
+import { useEffect, useRef, useState } from 'react'
+import { getSocket } from '../../socket'
+import { getStore } from '../../store'
+import { useRouter } from 'next/router'
 
 const Room: NextPage = () => {
   const hasBeenCalled = useRef(false)
   const router = useRouter()
   const [users, setUsers] = useState<Props[]>([])
-  const [cards, setCards] = useState<ICardProps[]>([])
+  const [cards, setCards] = useState<Card[]>([])
 
   useEffect(() => {
     const joinRoom = async () => {
@@ -21,58 +21,57 @@ const Room: NextPage = () => {
       const ws = await getSocket()
       const accessInfo = getStore('accessInfo')
 
-      if(!accessInfo) {
+      if (!accessInfo) {
         router.push('/antechamber')
         return
       }
 
       ws.send({
         type: 'join',
-        data: JSON.parse(accessInfo)
+        data: JSON.parse(accessInfo),
       })
 
-      ws.listen('message', event => {
-        console.log('event', event);
-        
-        const {type, data} = JSON.parse(event.data)
+      ws.listen('message', (event) => {
+        console.log('event', event)
 
-        if(type === 'users') {
+        const { type, data } = JSON.parse(event.data)
+
+        if (type === 'users') {
           setUsers(data)
         }
 
-        if(type === 'cards') {
-          setCards(data.map((item: any) => ({...item, owner: item.name})))
+        if (type === 'cards') {
+          setCards(data.map((item: any) => ({ ...item, owner: item.name })))
         }
       })
-    } 
-    
-    if(hasBeenCalled.current) {
+    }
+
+    if (hasBeenCalled.current) {
       return
     }
 
-    joinRoom();
+    joinRoom()
   }, [])
 
   const act = async (point: Point) => {
     const ws = await getSocket()
     const accessInfo = JSON.parse(getStore('accessInfo'))
 
-      if(!accessInfo) {
-        router.push('/antechamber')
-        return
-      }
-
+    if (!accessInfo) {
+      router.push('/antechamber')
+      return
+    }
 
     ws.send({
       type: 'act',
       data: {
         point,
-        ...accessInfo
-      }
+        ...accessInfo,
+      },
     })
   }
 
-  const deck: ICardProps[] = [
+  const deck: Card[] = [
     { id: '1', point: '0' },
     { id: '2', point: '0.5' },
     { id: '3', point: '1' },
@@ -104,10 +103,10 @@ const Room: NextPage = () => {
       </section>
       <section className={styles.aside}>
         <List data={users}>
-          { /*can I just User here?*/}
+          {/*can I just User here?*/}
           {(item) => <User {...item} />}
         </List>
-        <div className='story'></div>
+        <div className="story"></div>
       </section>
     </div>
   )

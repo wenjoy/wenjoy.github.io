@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import styles from './index.module.css'
+import styles from './antechamber.module.css'
 import cls from 'classnames'
 import { Role } from '../../components/user'
 import { getStore, setStore } from '../../store'
 import { uuid } from 'uuidv4'
+import { NextPage } from 'next'
 
-export default function () {
+const Antechamber: NextPage = () => {
   const router = useRouter()
   const roles = Object.keys(Role)
 
@@ -43,13 +44,12 @@ export default function () {
       return
     }
 
-
     accessInfo = {
       ...accessInfo,
       id: uuid(),
       name: username,
       room: room,
-      role: role
+      role: role,
     }
 
     const dataStr = JSON.stringify(accessInfo)
@@ -73,37 +73,62 @@ export default function () {
     setRole(e.target.value)
   }
 
-  return <div className={styles.container}>
-    <div className={styles.panel}>
-      <form>
-        <div className={styles.item}>
-          <label htmlFor='username'>Room : </label>
-          <input value={room} onChange={updateRoom} className={styles.input} id="room" name="room" />
-        </div>
+  return (
+    <div className={styles.container}>
+      <div className={styles.panel}>
+        <form>
+          <div className={styles.item}>
+            <label htmlFor="username">Room : </label>
+            <input
+              value={room}
+              onChange={updateRoom}
+              className={styles.input}
+              id="room"
+              name="room"
+            />
+          </div>
 
-        <div className={styles.item}>
-          <label htmlFor='username'>Name : </label>
-          <input value={username} onChange={updateUserName} className={styles.input} id="username" name="username" />
-        </div>
+          <div className={styles.item}>
+            <label htmlFor="username">Name : </label>
+            <input
+              value={username}
+              onChange={updateUserName}
+              className={styles.input}
+              id="username"
+              name="username"
+            />
+          </div>
 
-        <div className={styles.item}>
-          <fieldset className={styles.fieldset}>
-            <legend>Specify your role</legend>
-            {
-              roles.map((item, ind) => <>
-                <input defaultChecked={item === role} type="radio" id={item} name={item.toLowerCase()} onChange={updateRole} />
-                <label htmlFor={item}>{item}</label><br />
-              </>)
-            }
-          </fieldset>
-        </div>
+          <div className={styles.item}>
+            <fieldset className={styles.fieldset}>
+              <legend>Specify your role</legend>
+              {roles.map((item, ind) => (
+                <>
+                  <input
+                    defaultChecked={item === role}
+                    type="radio"
+                    id={item}
+                    name={item.toLowerCase()}
+                    onChange={updateRole}
+                  />
+                  <label htmlFor={item}>{item}</label>
+                  <br />
+                </>
+              ))}
+            </fieldset>
+          </div>
 
-        <div className={cls(styles.item, styles.hint)}>{hint}</div>
-        <div className={cls(styles.item, styles.center)}>
-          <button className={styles.button} onClick={access}> access </button>
-        </div>
-      </form>
+          <div className={cls(styles.item, styles.hint)}>{hint}</div>
+          <div className={cls(styles.item, styles.center)}>
+            <button className={styles.button} onClick={access}>
+              {' '}
+              access{' '}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-
-  </div>
+  )
 }
+
+export default Antechamber
