@@ -103,7 +103,7 @@ const Antechamber: NextPage = () => {
             <fieldset className={styles.fieldset}>
               <legend>Specify your role</legend>
               {roles.map((item, ind) => (
-                <>
+                <div key={ind}>
                   <input
                     defaultChecked={item === role}
                     type="radio"
@@ -113,7 +113,7 @@ const Antechamber: NextPage = () => {
                   />
                   <label htmlFor={item}>{item}</label>
                   <br />
-                </>
+                </div>
               ))}
             </fieldset>
           </div>
