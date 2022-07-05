@@ -6,6 +6,13 @@ stages:          # List of stages for jobs, and their order of execution
   - build
   - deploy
 
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+    
 prepare:
   stage: .pre
   script: 
