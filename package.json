@@ -10,7 +10,7 @@
     "lint": "next lint",
     "test": "jest --watch",
     "test:cov": "jest --coverage",
-    "pretest:e2e": "playwright install",
+    "pretest:e2e": "playwright install-deps chromium",
     "test:e2e": "playwright test; nyc report --reporter=html",
     "cover": "nyc report",
     "storybook": "start-storybook -p 6006",
