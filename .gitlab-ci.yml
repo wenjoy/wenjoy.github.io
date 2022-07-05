@@ -24,6 +24,7 @@ lint-job:   # This job also runs in the lint stage.
   stage: lint
   script:
     - echo "Linting code..."
+    - npm install
     - npm run lint
     - echo "No lint issues found."
 
