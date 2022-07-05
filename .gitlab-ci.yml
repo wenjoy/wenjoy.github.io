@@ -6,6 +6,13 @@ stages:          # List of stages for jobs, and their order of execution
   - build
   - deploy
 
+prepare:
+  stage: .pre
+  script: 
+    - echo "Environment prepare"
+    - npm install
+    - echo "Enviroment is ready"
+
 lint-job:   # This job also runs in the lint stage.
   stage: lint
   script:
