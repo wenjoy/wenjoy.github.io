@@ -21,6 +21,7 @@ exports[`CardsList should render the cards list properly 1`] = `
       >
         <div
           class="card frontface"
+          data-testid="card"
         >
            
           5

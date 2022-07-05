@@ -10,11 +10,11 @@
     "lint": "next lint",
     "test": "jest --watch",
     "test:cov": "jest --coverage",
+    "test:e2e": "playwright test; nyc report --reporter=html",
+    "cover": "nyc report",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "prepare": "husky install",
-    "test:e2e": "playwright test; nyc report --reporter=html",
-    "cover": "nyc report"
+    "prepare": "husky install"
   },
   "dependencies": {
     "classnames": "^2.3.1",

@@ -7,6 +7,7 @@ exports[`Card should display emoji rightly 1`] = `
   >
     <div
       class="card frontface"
+      data-testid="card"
     >
        
       ☕
@@ -25,6 +26,7 @@ exports[`Card should display number rightly 1`] = `
   >
     <div
       class="card frontface"
+      data-testid="card"
     >
        
       5
@@ -43,9 +45,28 @@ exports[`Card should display string rightly 1`] = `
   >
     <div
       class="card frontface"
+      data-testid="card"
     >
        
       ?
+    </div>
+    <div
+      class="owner"
+    />
+  </div>
+</div>
+`;
+
+exports[`Card should render back of the card 1`] = `
+<div>
+  <div
+    class="container small"
+  >
+    <div
+      class="card backface"
+      data-testid="card"
+    >
+       
     </div>
     <div
       class="owner"
@@ -61,6 +82,7 @@ exports[`Card should render the card 1`] = `
   >
     <div
       class="card frontface"
+      data-testid="card"
     >
        
       0

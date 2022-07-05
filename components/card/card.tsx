@@ -32,6 +32,7 @@ export const Card = ({
           styles.card,
           isBack ? styles.backface : styles.frontface,
         ].join(' ')}
+        data-testid="card"
       >
         {' '}
         {isBack ? '' : point}
