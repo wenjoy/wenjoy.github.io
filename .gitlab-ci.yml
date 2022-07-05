@@ -11,20 +11,15 @@ cache:
     files:
       - package-lock.json
   paths:
-    - .npm/
-    
-prepare:
-  stage: .pre
-  script: 
-    - echo "Environment prepare"
-    - npm install
-    - echo "Enviroment is ready"
+    - node_modules
+
+before_script:
+  - npm install
 
 lint-job:   # This job also runs in the lint stage.
   stage: lint
   script:
     - echo "Linting code..."
-    - npm install
     - npm run lint
     - echo "No lint issues found."
 
