@@ -12,7 +12,7 @@ export async function getSocket(): Promise<socket> {
 
   return fetch('/api/socket').then(() => {
     return new Promise((res, rej) => {
-      const url = `wss://${location.host}/api/socket`
+      const url = `${process.env.NEXT_PUBLIC_WSS_SCHEME}://${location.host}/api/socket`
       const connect = new WebSocket(url)
 
       connect.onopen = function () {
